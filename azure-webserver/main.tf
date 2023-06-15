@@ -45,7 +45,7 @@ resource "azurerm_network_security_group" "allowedports" {
        access = "Allow"
        protocol = "Tcp"
        source_port_range = "*"
-       destination_port_range = "8080"
+       destination_port_range = "5005"
        source_address_prefix = "*"
        destination_address_prefix = "*"
    }
