@@ -28,7 +28,7 @@ pipeline {
         stage ('Terraform Apply') {
             steps {
                 script {
-                    sh "cd staging-env && terraform ${params.Action} -auto-approve && terraform output -raw"
+                    sh "cd staging-env && terraform ${params.Action} -auto-approve && terraform output -raw The_webserver_Public_ip"
                     sh "StagingPublicIP=${terraform output -raw The_webserver_Public_ip}"
                 }    
             }
@@ -111,7 +111,7 @@ pipeline {
         stage ('Terraform-Apply') {
             steps {
                 script {
-                    sh "cd prod-env && terraform ${params.Action} -auto-approve && terraform output -raw"
+                    sh "cd prod-env && terraform ${params.Action} -auto-approve && terraform output -raw The_webserver_Public_ip"
                     sh "ProdPublicIP=${terraform output -raw The_webserver_Public_ip}"
                 }    
             }
