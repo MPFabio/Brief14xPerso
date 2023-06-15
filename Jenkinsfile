@@ -1,4 +1,4 @@
-pipeline {
+   pipeline {
     agent any
   
     parameters
@@ -87,7 +87,7 @@ pipeline {
                 }
             }
         }
-        
+
         stage ('Echo IP-') {
             steps {
                 script {
