@@ -88,7 +88,7 @@ pipeline {
             }
         }
         
-        stage ('Echo IP') {
+        stage ('Echo IP-') {
             steps {
                 script {
                     sh "echo ${ProdPublicIP}"
