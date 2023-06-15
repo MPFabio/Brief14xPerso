@@ -28,7 +28,7 @@ pipeline {
         stage ('Terraform Apply') {
             steps {
                 script {
-                    sh "cd staging-env && terraform ${params.Action} -auto-approve && StegingPublicIP=${terraform output -raw The_webserver_Public_ip}"
+                    sh "cd staging-env && terraform ${params.Action} -auto-approve && StagingPublicIP=$(terraform output -raw The_webserver_Public_ip)"
                 }    
             }
         }   
