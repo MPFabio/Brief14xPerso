@@ -82,7 +82,7 @@
         } 
 
        
-       stage('SSH-') {
+       stage('SSH') {
             steps {
                 script{
                     node {
