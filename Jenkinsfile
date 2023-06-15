@@ -30,8 +30,7 @@ pipeline {
                 script {
                     sh "cd staging-env && terraform ${params.Action} -auto-approve && terraform output -raw The_webserver_Public_ip"
                         environment {
-                            StagingPublicIP="${terraform output -raw The_webserver_Public_ip}"
-                            sh "echo $StagingPublicIP"
+                            StagingPublicIP="${terraform output -raw The_webserver_Public_ip}
                         }
                 }    
             }
@@ -76,7 +75,7 @@ pipeline {
                     node {
                         def remote = [:]
                         remote.name = 'fabio'
-                        remote.host = '$StagingPublicIP'
+                        remote.host = "$StagingPublicIP"
                         remote.user = 'fabio'
                         remote.password = 'Azerty-123'
                         remote.allowAnyHosts = true
@@ -128,7 +127,7 @@ pipeline {
                     node {
                         def remote = [:]
                         remote.name = 'fabio'
-                        remote.host = '$ProdPublicIP'
+                        remote.host = "$ProdPublicIP"
                         remote.user = 'fabio'
                         remote.password = 'Azerty-123'
                         remote.allowAnyHosts = true
