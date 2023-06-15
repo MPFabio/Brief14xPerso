@@ -28,12 +28,18 @@ pipeline {
         stage ('Terraform Apply') {
             steps {
                 script {
-                    sh "cd staging-env && terraform ${params.Action} -auto-approve && terraform output -raw The_webserver_Public_ip"
-                    StagingPublicIP = sh(returnStdout: true, script: "terraform output The_webserver_Public_ip").trim()
+                    sh "cd staging-env && terraform ${params.Action} -auto-approve"
                 }    
             }
         }   
-
+        stage ('Var') {
+            steps {
+                script {
+                    azureCLI commands: [[exportVariablesString: '', script: 'StagingPublicIP=$(az vm show -d -g nginx-server-fabio-staging -n nginx-webserver --query publicIps -o tsv)']], principalCredentialId: ''
+                }
+            }
+        }
+        
         stage ('Echo IP') {
             steps {
                 script {
@@ -69,10 +75,26 @@ pipeline {
         stage ('Terraform-Apply') {
             steps {
                 script {
-                    sh "cd prod-env && terraform ${params.Action} -auto-approve && ProdPublicIP=${terraform output -raw The_webserver_Public_ip}"
+                    sh "cd prod-env && terraform ${params.Action} -auto-approve"
                 }    
             }
         }  
+
+        stage ('Var') {
+            steps {
+                script {
+                    azureCLI commands: [[exportVariablesString: '', script: 'ProdPublicIP=$(az vm show -d -g nginx-server-fabio-prod -n nginx-webserver --query publicIps -o tsv)']], principalCredentialId: ''
+                }
+            }
+        }
+        
+        stage ('Echo IP') {
+            steps {
+                script {
+                    sh "echo ${ProdPublicIP}"
+                }
+            }
+        }
                
         stage('SSH-') {
             steps {
