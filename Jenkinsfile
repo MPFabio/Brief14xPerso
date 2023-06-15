@@ -80,7 +80,7 @@ pipeline {
             }
         }  
 
-        stage ('Var') {
+        stage ('Var-') {
             steps {
                 script {
                     azureCLI commands: [[exportVariablesString: '', script: 'ProdPublicIP=$(az vm show -d -g nginx-server-fabio-prod -n nginx-webserver --query publicIps -o tsv)']], principalCredentialId: ''
