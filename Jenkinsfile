@@ -25,10 +25,11 @@ pipeline {
             }
         }
 
-        stage ('Terraform apply') {
+        stage ('Terraform Apply') {
             steps {
                 script {
-                    sh "cd staging-env && terraform ${params.Action} -auto-approve"
+                    sh "cd staging-env && terraform ${params.Action} -auto-approve && terraform -output -raw"
+                    sh "StagingPublicIP=${terraform output -raw The_webserver_Public_ip}"
                 }    
             }
         } 
@@ -72,9 +73,9 @@ pipeline {
                     node {
                         def remote = [:]
                         remote.name = 'fabio'
-                        remote.host = '4.233.106.239'
+                        remote.host = '$StagingPublicIP'
                         remote.user = 'fabio'
-                        remote.password = '****'
+                        remote.password = 'Azerty-123'
                         remote.allowAnyHosts = true
                         stage('Remote SSH') {
                             sshCommand remote: remote, command: "sudo docker pull fabiomp/fabio-brief14"
@@ -84,156 +85,14 @@ pipeline {
                 }
             }
         }
+
+        stage ('Input') {
+            steps {
+                input message: 'Is the staging deployment good ?', ok: 'ok'
+            }
+        }
+
                 stage ('Terraform Init') {
-            steps {
-                script {
-                    sh "cd staging-env && terraform init"
-                }                
-            }
-        }
-    
-        stage ('Terraform Plan') {
-            steps {
-                script {
-                    sh "cd staging-env && terraform plan"
-                }
-            }
-        }
-
-        stage ('Terraform apply') {
-            steps {
-                script {
-                    sh "cd staging-env && terraform ${params.Action} -auto-approve"
-                }    
-            }
-        } 
-
-        stage ('Docker Build') {
-            steps {
-                script {
-                    sh 'cd app && sudo docker build -t fabio-brief14 .'
-                    echo 'Build Image Completed'
-                }    
-            }
-        }
-
-        stage ('Docker Tag') {
-            steps {
-                script {
-                    sh 'cd app && sudo docker tag fabio-tp-game fabiomp/fabio-brief14'
-                }
-            }
-        }
-
-        stage('Docker Login') {
-            steps {
-                script {
-                    sh 'sudo docker login -u fabiomp -p Aucunmdp69' 
-                }    
-            }
-        }
-
-        stage ('Docker Push') {
-            steps {
-                script {
-                    sh 'cd app && sudo docker push fabiomp/fabio-brief14'        
-                }    
-            }
-        }    
-               
-        stage('SSH') {
-            steps {
-                script{
-                    node {
-                        def remote = [:]
-                        remote.name = 'fabio'
-                        remote.host = '4.233.106.239'
-                        remote.user = 'fabio'
-                        remote.password = '****'
-                        remote.allowAnyHosts = true
-                        stage('Remote SSH') {
-                            sshCommand remote: remote, command: "sudo docker pull fabiomp/fabio-brief14"
-                            sshCommand remote: remote, command: "sudo docker run -d -p 1234 --name tondocker fabiomp/fabio-brief13"       
-                        }
-                    }
-                }
-            }
-        stage ('Terraform Init') {
-            steps {
-                script {
-                    sh "cd staging-env && terraform init"
-                }                
-            }
-        }
-    
-        stage ('Terraform Plan') {
-            steps {
-                script {
-                    sh "cd staging-env && terraform plan"
-                }
-            }
-        }
-
-        stage ('Terraform apply') {
-            steps {
-                script {
-                    sh "cd staging-env && terraform ${params.Action} -auto-approve"
-                }    
-            }
-        } 
-
-        stage ('Docker Build') {
-            steps {
-                script {
-                    sh 'cd app && sudo docker build -t fabio-brief14 .'
-                    echo 'Build Image Completed'
-                }    
-            }
-        }
-
-        stage ('Docker Tag') {
-            steps {
-                script {
-                    sh 'cd app && sudo docker tag fabio-tp-game fabiomp/fabio-brief14'
-                }
-            }
-        }
-
-        stage('Docker Login') {
-            steps {
-                script {
-                    sh 'sudo docker login -u fabiomp -p Aucunmdp69' 
-                }    
-            }
-        }
-
-        stage ('Docker Push') {
-            steps {
-                script {
-                    sh 'cd app && sudo docker push fabiomp/fabio-brief14'        
-                }    
-            }
-        }    
-               
-        stage('SSH') {
-            steps {
-                script{
-                    node {
-                        def remote = [:]
-                        remote.name = 'fabio'
-                        remote.host = '4.233.106.239'
-                        remote.user = 'fabio'
-                        remote.password = '****'
-                        remote.allowAnyHosts = true
-                        stage('Remote SSH') {
-                            sshCommand remote: remote, command: "sudo docker pull fabiomp/fabio-brief14"
-                            sshCommand remote: remote, command: "sudo docker run -d -p 1234 --name tondocker fabiomp/fabio-brief13"       
-                        }
-                    }
-                }
-            }
-        }
-        stage ('Terraform Init') {
             steps {
                 script {
                     sh "cd prod-env && terraform init"
@@ -249,46 +108,14 @@ pipeline {
             }
         }
 
-        stage ('Terraform apply') {
+        stage ('Terraform Apply') {
             steps {
                 script {
-                    sh "cd prod-env && terraform ${params.Action} -auto-approve"
+                    sh "cd prod-env && terraform ${params.Action} -auto-approve && terraform output -raw"
+                    sh "ProdPublicIP=${terraform output -raw The_webserver_Public_ip}"
                 }    
             }
-        } 
-
-        stage ('Docker Build') {
-            steps {
-                script {
-                    sh 'cd app && sudo docker build -t fabio-brief14 .'
-                    echo 'Build Image Completed'
-                }    
-            }
-        }
-
-        stage ('Docker Tag') {
-            steps {
-                script {
-                    sh 'cd app && sudo docker tag fabio-tp-game fabiomp/fabio-brief14'
-                }
-            }
-        }
-
-        stage('Docker Login') {
-            steps {
-                script {
-                    sh 'sudo docker login -u fabiomp -p Aucunmdp69' 
-                }    
-            }
-        }
-
-        stage ('Docker Push') {
-            steps {
-                script {
-                    sh 'cd app && sudo docker push fabiomp/fabio-brief14'        
-                }    
-            }
-        }    
+        }  
                
         stage('SSH') {
             steps {
@@ -296,12 +123,17 @@ pipeline {
                     node {
                         def remote = [:]
                         remote.name = 'fabio'
-                        remote.host = '4.233.106.239'
+                        remote.host = '$ProdPublicIP'
                         remote.user = 'fabio'
-                        remote.password = '****'
+                        remote.password = 'Azerty-123'
                         remote.allowAnyHosts = true
                         stage('Remote SSH') {
                             sshCommand remote: remote, command: "sudo docker pull fabiomp/fabio-brief14"
-                            sshCommand remote: remote, command: "sudo docker run -d -p 1234 --name tondocker fabiomp/fabio-brief13" 
-    }    
+                            sshCommand remote: remote, command: "sudo docker run -d -p 1234 --name tondocker fabiomp/fabio-brief13"       
+                        }
+                    }
+                }
+            }        
+        }   
+    }
 }
