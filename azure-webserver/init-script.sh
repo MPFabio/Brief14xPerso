@@ -9,4 +9,4 @@ sudo docker build -t fabio-brief14
 sudo docker tag fabio-tp-game fabiomp/fabio-brief14
 sudo docker login -u fabiomp -p Aucunmdp69
 sudo docker push fabiomp/fabio-brief14           
-sudo docker run -d -p 1234 --name docker-nginx fabiomp/docker-nginx:latest
+sudo docker run -d -p 5005:1234 --name docker-nginx fabiomp/docker-nginx:latest
