@@ -5,6 +5,7 @@ sudo apt install curl
 sudo curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh get-docker.sh
 #Creating container
+cd app
 sudo docker build -t fabio-brief14 
 sudo docker tag fabio-tp-game fabiomp/fabio-brief14
 sudo docker login -u fabiomp -p Aucunmdp69
