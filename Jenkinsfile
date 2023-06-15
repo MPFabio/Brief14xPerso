@@ -1,11 +1,5 @@
    pipeline {
     agent any
-  
-    parameters
-    {
-        booleanParam(defaultValue: true, description: '', name: 'Deploy')
-        choice(choices: ['apply', 'destroy'], name: 'Action')
-    }
     
     stages {
         
@@ -28,7 +22,7 @@
         stage ('Terraform Apply') {
             steps {
                 script {
-                    sh "cd staging-env && terraform ${params.Action} -auto-approve"
+                    sh "cd staging-env && terraform apply -auto-approve"
                 }    
             }
         }   
@@ -58,7 +52,7 @@
         stage ('Terraform-Apply') {
             steps {
                 script {
-                    sh "cd prod-env && terraform ${params.Action} -auto-approve"
+                    sh "cd prod-env && terraform apply -auto-approve"
                 }    
             }
         }  
