@@ -32,15 +32,7 @@ pipeline {
                     sh "StagingPublicIP=${terraform output -raw The_webserver_Public_ip}"
                 }    
             }
-        } 
-
-        stage ('Docker Build') {
-            steps {
-                script {
-                    input message: 'Is the staging good ?', ok: 'ok'
-                }
-            }    
-        }    
+        }   
         
         stage ('Docker Build') {
             steps {
@@ -100,7 +92,7 @@ pipeline {
             }
         }
 
-                stage ('Terraform Init') {
+                stage ('Terraform-Init') {
             steps {
                 script {
                     sh "cd prod-env && terraform init"
@@ -108,7 +100,7 @@ pipeline {
             }
         }
     
-        stage ('Terraform Plan') {
+        stage ('Terraform-Plan') {
             steps {
                 script {
                     sh "cd prod-env && terraform plan"
@@ -116,7 +108,7 @@ pipeline {
             }
         }
 
-        stage ('Terraform Apply') {
+        stage ('Terraform-Apply') {
             steps {
                 script {
                     sh "cd prod-env && terraform ${params.Action} -auto-approve && terraform output -raw"
@@ -125,7 +117,7 @@ pipeline {
             }
         }  
                
-        stage('SSH') {
+        stage('SSH-') {
             steps {
                 script{
                     node {
