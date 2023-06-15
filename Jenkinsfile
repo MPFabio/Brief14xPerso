@@ -37,6 +37,14 @@ pipeline {
         stage ('Docker Build') {
             steps {
                 script {
+                    input message: 'Is the staging good ?', ok: 'ok'
+                }
+            }    
+        }    
+        
+        stage ('Docker Build') {
+            steps {
+                script {
                     sh 'cd app && sudo docker build -t fabio-brief14 .'
                     echo 'Build Image Completed'
                 }    
