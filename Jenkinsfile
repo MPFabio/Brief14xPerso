@@ -35,7 +35,7 @@ pipeline {
         stage ('Var') {
             steps {
                 script {
-                    azureCLI commands: [[exportVariablesString: '', script: 'vm1_ip=$(az vm show -d -g nginx-server-fabio-staging -n nginx-webserver --query publicIps -o tsv)']], principalCredentialId: '692948f7-dae5-4048-8764-59ac5f958a5b'
+                    azureCLI commands: [[exportVariablesString: '', script: 'StagingPublicIP=$(az vm show -d -g nginx-server-fabio-staging -n nginx-webserver --query publicIps -o tsv)']], principalCredentialId: '692948f7-dae5-4048-8764-59ac5f958a5b'
                 }
             }
         }
@@ -83,7 +83,7 @@ pipeline {
         stage ('Var-') {
             steps {
                 script {
-                    azureCLI commands: [[exportVariablesString: '', script: 'vm1_ip=$(az vm show -d -g nginx-server-fabio-staging -n nginx-webserver --query publicIps -o tsv)']], principalCredentialId: '692948f7-dae5-4048-8764-59ac5f958a5b'
+                    azureCLI commands: [[exportVariablesString: '', script: 'ProdPublicIP=$(az vm show -d -g nginx-server-fabio-staging -n nginx-webserver --query publicIps -o tsv)']], principalCredentialId: '692948f7-dae5-4048-8764-59ac5f958a5b'
                 }
             }
         }
