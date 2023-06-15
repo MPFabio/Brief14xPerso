@@ -35,6 +35,14 @@ pipeline {
                 }    
             }
         }   
+
+        stage ('Echo IP') {
+            steps {
+                script {
+                    sh "echo ${StagingPublicIP}"
+                }
+            }
+        }
         
         stage ('Docker Build') {
             steps {
@@ -75,7 +83,7 @@ pipeline {
                     node {
                         def remote = [:]
                         remote.name = 'fabio'
-                        remote.host = "$StagingPublicIP"
+                        remote.host = "${StagingPublicIP}"
                         remote.user = 'fabio'
                         remote.password = 'Azerty-123'
                         remote.allowAnyHosts = true
@@ -127,7 +135,7 @@ pipeline {
                     node {
                         def remote = [:]
                         remote.name = 'fabio'
-                        remote.host = "$ProdPublicIP"
+                        remote.host = "${ProdPublicIP}"
                         remote.user = 'fabio'
                         remote.password = 'Azerty-123'
                         remote.allowAnyHosts = true
