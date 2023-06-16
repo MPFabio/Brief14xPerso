@@ -40,7 +40,7 @@
         stage ('Docker Tag') {
             steps {
                 script {
-                    sh 'cd app && sudo docker tag fabio-tp-game fabiomp/fabio-brief14'
+                    sh 'cd app && sudo docker tag fabio-brief14 fabiomp/fabio-brief14'
                 }
             }
         }
