@@ -1,4 +1,4 @@
-                                                 *** Déploiement d'une appli sur Azure avec Docker, Terraform et Jenkins ***
+                                       *** Déploiement d'une appli sur Azure avec Docker, Terraform et Jenkins ***
                                                
   Terraform as an infra :
   
