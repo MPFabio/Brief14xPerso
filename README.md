@@ -26,7 +26,8 @@ Les outputs propres aux modules parents sont renseigné en leur sein, le provide
   
   
   Création d'une image docker via Jenkinsfile à partir d'un Dockerfile selon les étapes :
-   
+  
+  - Se déplacer là où se trouve le dockerfile avant chaque commande pour pouvoir les exécuter
   - Docker Build : docker build -t MyContainerName .
   - Docker Tag : docker tag MyContainerName MyDockerHubName/MyContainerName
   - Docker Login : docker login -u MyDockerHubName -p MyDockerHubPassword
