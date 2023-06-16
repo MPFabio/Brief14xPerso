@@ -23,7 +23,7 @@
         stage('Docker Login') {
             steps {
                 script {
-                    sh 'sudo docker login -u fabiomp -p Aucunmdp69' 
+                    sh 'sudo docker login -u **** -p ****' 
                 }    
             }
         }
