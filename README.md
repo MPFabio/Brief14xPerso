@@ -34,3 +34,6 @@ Les outputs propres aux modules parents sont renseigné en leur sein, le provide
   - Docker Push : docker push MyDockerHubName/MyContainerName
                      
                     
+  Insights as an alert
+
+  - Sélectionner la VM à surveiller dans Azure, activez l'insights dans l'onglet de gauche, puis configurer les alertes dans l'onglet du même nom via les règles d'alerte.
