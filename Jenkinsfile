@@ -65,7 +65,7 @@
             }
         }
 
-                stage ('Terraform-Init') {
+        stage ('Terraform-Init') {
             steps {
                 script {
                     sh "cd prod-env && terraform init"
