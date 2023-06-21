@@ -27,3 +27,6 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/app/Dockerfile'
         tags: |
           $(tag)
+          - task: Docker@2
+            inputs:
+              command: 'push'
