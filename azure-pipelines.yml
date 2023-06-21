@@ -37,6 +37,6 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
-- task: Docker@2
-  inputs:
-    command: 'push'
+    - task: Docker@2
+        inputs:
+          command: 'push'
