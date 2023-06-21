@@ -27,7 +27,16 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/app/Dockerfile'
         tags: |
           $(tag)
-          - task: Docker@2
+          - task: Docker@2Push
+
+- stage: Build
+  displayName: Push image
+  jobs:
+  - job: Push
+    displayName: Push
+    pool:
+      vmImage: ubuntu-latest
+    steps:
 - task: Docker@2
   inputs:
     command: 'push'
