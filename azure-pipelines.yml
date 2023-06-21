@@ -28,5 +28,6 @@ stages:
         tags: |
           $(tag)
           - task: Docker@2
-            inputs:
-              command: 'push'
+- task: Docker@2
+  inputs:
+    command: 'push'
